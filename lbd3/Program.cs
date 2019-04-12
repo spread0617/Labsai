@@ -12,6 +12,7 @@ namespace lbd3
     {
         static List<Studentas> studentai = new List<Studentas>();
         static List<Studentas> _studentai = new List<Studentas>();
+        static List<Studentas> RanStud = new List<Studentas>();
         static double pazymys;
         static List<double> pazymiai = new List<double>();
         static double nd_total = 0;
@@ -198,7 +199,7 @@ namespace lbd3
                     int max = 10;
                     int randomPazymys = 0;
                     Random RandNum = new Random();
-                    for (int i = 0; i < kiekiz; i++)
+                    for (int i = 0; i < kiekiz-1; i++)
                     {
                         randomPazymys = RandNum.Next(min, max);
                         pazymiai.Add(randomPazymys);
@@ -226,7 +227,67 @@ namespace lbd3
             catch (Exception e) { Console.WriteLine("Klaida: " + e); }
         }
 
+        static void RasymasIFaila() {
+            try
+            {
 
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Klaida: " + e);
+            }
+        }
+
+       /* static void Generavimas() {
+            try
+            {
+                string path10 = "C:/Users/domI/Desktop/Git/Labs/10.txt";
+                string path100 = "C:/Users/domI/Desktop/Git/Labs/100.txt";
+                string path1000 = "C:/Users/domI/Desktop/Git/Labs/1000.txt";
+                string path10000 = "C:/Users/domI/Desktop/Git/Labs/10000.txt";
+
+                FileStream fs10 = File.Create(@path10);
+                FileStream fs100 = File.Create(@path100);
+                FileStream fs1000 = File.Create(@path1000);
+                FileStream fs10000 = File.Create(@path10000);
+
+ 
+                
+                string header = "Vardas Pavarde ND1 ND2 ND3 ND4 ND5 Egzaminas";
+                
+                System.IO.File.WriteAllText(@path10,header);
+                System.IO.File.WriteAllText(@path100, header);
+                System.IO.File.WriteAllText(@path1000, header);
+                System.IO.File.WriteAllText(@path10000, header);
+
+                for (int i = 0; i < 9; i++) {
+                    string _vardas = "vardas{i}";
+                    string _pavarde = "pavarde{i}";
+                    int min = 0;
+                    int max = 10;
+                    int randomPazymys = 0;
+                    Random RandNum = new Random();
+                    double _egzas = RandNum.Next(min, max);
+                    for (int j = 0; i < 4; i++)
+                    {
+                        randomPazymys = RandNum.Next(min, max);
+                        pazymiai.Add(randomPazymys);
+                    }
+                    
+                }
+
+                using (FileStream fs = File.Open(path10))
+                {
+                    StreamWriter sw = new StreamWriter(fs);
+                    studentai.ForEach(r => sw.WriteLine(r));
+                }
+
+            }
+            catch (Exception e) {
+                Console.WriteLine("Klaida: " + e);
+            }
+
+        }*/
 
 
 
