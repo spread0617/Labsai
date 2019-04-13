@@ -248,10 +248,15 @@ namespace lbd3
                     }
 
                 }
-                using (TextWriter tw = new StreamWriter("nuskriaustukai.txt"))
+                using (TextWriter tw = new StreamWriter(@"C:/Users/domI/Desktop/Git/Labs/nuskriaustukai.txt"))
                 {
                     foreach (var nuskr in nuskriaustukai)
-                        tw.WriteLine("{0} {1} {2} {3} {4} {5} {6}",nuskr.vardas, nuskr.pavarde, nuskr.pazymiai.ToString(),nuskr.egzaminas.ToString());
+                        tw.WriteLine("{0} {1} {2} {3} {4}",nuskr.vardas, nuskr.pavarde, nuskr.pazymiai.ToString(),nuskr.egzaminas.ToString());
+                }
+                using (TextWriter tw = new StreamWriter(@"C:/Users/domI/Desktop/Git/Labs/genijai.txt"))
+                {
+                    foreach (var glv in galvociai)
+                        tw.WriteLine("{0} {1} {2} {3} {4}", glv.vardas, glv.pavarde, glv.pazymiai.ToString(), glv.egzaminas.ToString());
                 }
             }
             catch (Exception e)
