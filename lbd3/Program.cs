@@ -10,6 +10,8 @@ namespace lbd3
 {
     class Program
     {
+        static List<Studentas> galvociai = new List<Studentas>();
+        static List<Studentas> nuskriaustukai = new List<Studentas>();
         static List<Studentas> studentai = new List<Studentas>();
         static List<Studentas> _studentai = new List<Studentas>();
         static List<Studentas> RanStud = new List<Studentas>();
@@ -33,7 +35,7 @@ namespace lbd3
             try {
                 while (testi)
                 {
-                    Console.WriteLine("1) Ivesti nauja studenta\n2) Galutiniam balui pagal vidurki\n3) Galutiniam balui pagal mediana\n4) Baigti darba");
+                    Console.WriteLine("1) Ivesti nauja studenta\n2) Galutiniam balui pagal vidurki\n3) Galutiniam balui pagal mediana\n4) Irasyti i faila\n5) Baigti darba");
                     int choice = int.Parse(Console.ReadLine());
                     switch (choice)
                     {
@@ -59,6 +61,10 @@ namespace lbd3
                             medianosSkaiciavimas();
                             break;
                         case 4:
+                            RasymasIFaila();
+                            break;
+
+                        case 5:
                             testi = false;
                             break;
                         default:
@@ -230,7 +236,23 @@ namespace lbd3
         static void RasymasIFaila() {
             try
             {
+                foreach (var stud in studentai) {
+                    double nd_ivert = stud.nd_total1 / stud.kiekis;
+                    galutinis = (0.3 * nd_ivert) + (0.7 * stud.egzaminas);
+                    if (galutinis >= 5)
+                    {
+                        galvociai.Add(new Studentas(stud.vardas, stud.pavarde, stud.egzaminas, stud.pazymiai, stud.nd_total1, stud.kiekis));
+                    }
+                    else if (galutinis < 5) {
+                       nuskriaustukai.Add(new Studentas(stud.vardas, stud.pavarde, stud.egzaminas, stud.pazymiai, stud.nd_total1, stud.kiekis));
+                    }
 
+                }
+                using (TextWriter tw = new StreamWriter("nuskriaustukai.txt"))
+                {
+                    foreach (var nuskr in nuskriaustukai)
+                        tw.WriteLine("{0} {1} {2} {3} {4} {5} {6}",nuskr.vardas, nuskr.pavarde, nuskr.pazymiai.ToString(),nuskr.egzaminas.ToString());
+                }
             }
             catch (Exception e)
             {
