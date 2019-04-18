@@ -15,10 +15,9 @@ namespace lbd3
         static List<Studentas> studentai = new List<Studentas>();
         static List<Studentas> _studentai = new List<Studentas>();
         static List<Studentas> RanStud = new List<Studentas>();
-        static double pazymys;
-        static List<double> pazymiai = new List<double>();
+        static int pazymys;
+        static List<int> pazymiai = new List<int>();
         static double nd_total = 0;
-        static int skaitiklis = 0;
         static string vardas;
         static string pavarde;
         static double galutinis = 0;
@@ -32,7 +31,7 @@ namespace lbd3
 
 
             bool testi = true;
-            try {
+            //try {
                 while (testi)
                 {
                     Console.WriteLine("1) Ivesti nauja studenta\n2) Galutiniam balui pagal vidurki\n3) Galutiniam balui pagal mediana\n4) Irasyti i faila\n5) Baigti darba");
@@ -46,16 +45,23 @@ namespace lbd3
                             {
                                 case 1:
                                     IsFailo();
-                                    break;
+                                
+                                break;
                                 case 2:
                                     PlusStud();
-                                    pazymiai.Clear();
-                                    nd_total = 0;
-                                    break;
+                                
+                                break;
                             }
                             break;
                         case 2:
                             vidurkioSk();
+                        foreach (var std in studentai) {
+                            Console.WriteLine(std.vardas);
+                            for (int i = 0; i < std._pazymiai.Count(); i++) {
+                                Console.WriteLine(std._pazymiai[i]);
+                            }
+
+                        }
                             break;
                         case 3:
                             medianosSkaiciavimas();
@@ -79,13 +85,14 @@ namespace lbd3
 
                     Console.ReadLine();
                 }
-            }catch(Exception e) { Console.WriteLine("Klaida: " + e); }
+            //}catch(Exception e) { Console.WriteLine("Klaida: " + e); }
 
 
         }
 
         static public void IsFailo()
         {
+
             //System.IO.StreamReader file = new System.IO.StreamReader(@"C:\Users\domI\Desktop\Git\Labs\kursiokai.txt");
             //string[] words = file.ReadToEnd().Split(' ');
             try
@@ -96,6 +103,7 @@ namespace lbd3
                     {
                         using (StreamReader sr = new StreamReader(mmStream, Encoding.ASCII))
                         {
+                            pazymiai.Clear();
                             string headerLine = sr.ReadLine();
                             while (!sr.EndOfStream)
                             {
@@ -106,7 +114,7 @@ namespace lbd3
                                 for (int i = 2; i < 6; i++)
                                 {
 
-                                    double pazymysRead = double.Parse(lineWords[i]);
+                                    int pazymysRead = int.Parse(lineWords[i]);
                                     pazymiai.Add(pazymysRead);
                                     nd_total = nd_total + pazymysRead;
                                     /* double pazymysRead1 = double.Parse(lineWords[2]);
@@ -118,8 +126,9 @@ namespace lbd3
                                 }
                                 egz_ivert = double.Parse(lineWords[7]);
                                 studentai.Add(new Studentas(vardas, pavarde, egz_ivert, pazymiai, nd_total, 5));
-                                pazymiai.Clear();
+                                
                                 nd_total = 0;
+                                
                             }
                         }
                     }
@@ -134,32 +143,32 @@ namespace lbd3
 
             //int cnt = pazymiai.Count;
 
-            try
+            // try
+            //{
+            foreach (var stud in studentai)
             {
-                foreach (var stud in studentai)
+                stud._pazymiai.Sort();
+                if (stud.kiekis % 2 == 0)
                 {
-                    stud.pazymiai.Sort();
-                    if (stud.kiekis % 2 == 0)
-                    {
-                        double middleElement1 = stud.pazymiai[(stud.kiekis / 2) - 1]; //out of bounds!!!!!!!!!!!!!!!!!!!!!!!!
-                        double middleElement2 = stud.pazymiai[(stud.kiekis / 2)];
-                        mediana = (middleElement1 + middleElement2) / 2;
-
-                    }
-                    else
-                    {
-                        mediana = stud.pazymiai[(stud.kiekis / 2)]; //out of bounds!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    }
-
-                    galutinis = (0.3 * mediana) + (0.7 * egz_ivert);
-
-                    Console.WriteLine("{0,-5}{1,5}{2,10}", stud.vardas, stud.pavarde, galutinis);
+                    double middleElement1 = stud._pazymiai[(stud.kiekis / 2) - 1]; //out of bounds!!!!!!!!!!!!!!!!!!!!!!!!
+                    double middleElement2 = stud._pazymiai[(stud.kiekis / 2)];
+                    mediana = (middleElement1 + middleElement2) / 2;
 
                 }
+                else
+                {
+                    mediana = stud._pazymiai[(stud.kiekis / 2)]; //out ofasd bounds!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                }
+
+                galutinis = (0.3 * mediana) + (0.7 * egz_ivert);
+
+                Console.WriteLine("{0,-5}{1,5}{2,10}", stud.vardas, stud.pavarde, galutinis);
+
             }
-            catch (Exception e) {
-                Console.WriteLine("Klaida: " + e);
-            }
+            //}
+            // catch (Exception e) {
+            //  Console.WriteLine("Klaida: " + e);
+        //}
         }
 
 
@@ -194,7 +203,7 @@ namespace lbd3
                 Console.WriteLine("Iveskite studento varda ir pavarde:");
                 vardas = Console.ReadLine();
                 pavarde = Console.ReadLine();
-
+                pazymiai.Clear();
                 Console.WriteLine("Iveskite namu darbu ivertinimu kieki:");
                 int kiekiz = int.Parse(Console.ReadLine());
                 Console.WriteLine("1) atsitiktinai sugeneruoti ivertinimai\n2) Ivesti ivertinimus ranka.");
@@ -209,6 +218,7 @@ namespace lbd3
                     {
                         randomPazymys = RandNum.Next(min, max);
                         pazymiai.Add(randomPazymys);
+                        nd_total += randomPazymys;
                     }
 
                 }
@@ -216,19 +226,21 @@ namespace lbd3
                 {
                     Console.WriteLine("Iveskite studento namu darbu ivertinimus:");
 
-                    for (int i = 0; i < kiekiz; i++)
+                    for (int i = 1; i < kiekiz; i++)
                     {
                         Console.WriteLine("Iveskite studento {0} ivertinima", i);
-                        pazymys = double.Parse(Console.ReadLine());
+                        pazymys = int.Parse(Console.ReadLine());
                         pazymiai.Add(pazymys);
-                        nd_total = nd_total + pazymys;
-                        skaitiklis++;
+                        nd_total += pazymys;
+                        
                     }
+                   
                 }
                 Console.WriteLine("Iveskite studento egzamino ivertinima:");
                 egz_ivert = double.Parse(Console.ReadLine());
                 studentai.Add(new Studentas(vardas, pavarde, egz_ivert, pazymiai, nd_total, kiekiz));
-
+               
+                nd_total = 0;
             }
             catch (Exception e) { Console.WriteLine("Klaida: " + e); }
         }
@@ -241,22 +253,22 @@ namespace lbd3
                     galutinis = (0.3 * nd_ivert) + (0.7 * stud.egzaminas);
                     if (galutinis >= 5)
                     {
-                        galvociai.Add(new Studentas(stud.vardas, stud.pavarde, stud.egzaminas, stud.pazymiai, stud.nd_total1, stud.kiekis));
+                        galvociai.Add(new Studentas(stud.vardas, stud.pavarde, stud.egzaminas, stud._pazymiai, stud.nd_total1, stud.kiekis));
                     }
                     else if (galutinis < 5) {
-                       nuskriaustukai.Add(new Studentas(stud.vardas, stud.pavarde, stud.egzaminas, stud.pazymiai, stud.nd_total1, stud.kiekis));
+                       nuskriaustukai.Add(new Studentas(stud.vardas, stud.pavarde, stud.egzaminas, stud._pazymiai, stud.nd_total1, stud.kiekis));
                     }
 
                 }
                 using (TextWriter tw = new StreamWriter(@"C:/Users/domI/Desktop/Git/Labs/nuskriaustukai.txt"))
                 {
                     foreach (var nuskr in nuskriaustukai)
-                        tw.WriteLine("{0} {1} {2} {3} {4}",nuskr.vardas, nuskr.pavarde, nuskr.pazymiai.ToString(),nuskr.egzaminas.ToString());
+                        tw.WriteLine("{0} {1} {2} {3} {4}",nuskr.vardas, nuskr.pavarde, nuskr._pazymiai.ToString(),nuskr.egzaminas.ToString());
                 }
                 using (TextWriter tw = new StreamWriter(@"C:/Users/domI/Desktop/Git/Labs/genijai.txt"))
                 {
                     foreach (var glv in galvociai)
-                        tw.WriteLine("{0} {1} {2} {3} {4}", glv.vardas, glv.pavarde, glv.pazymiai.ToString(), glv.egzaminas.ToString());
+                        tw.WriteLine("{0} {1} {2} {3} {4}", glv.vardas, glv.pavarde, glv._pazymiai.ToString(), glv.egzaminas.ToString());
                 }
             }
             catch (Exception e)
