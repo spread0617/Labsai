@@ -14,7 +14,7 @@ namespace lbd3
         static List<Studentas> _studentai100 = new List<Studentas>();
         static List<Studentas> _studentai1000 = new List<Studentas>();
         static List<Studentas> _studentai10000 = new List<Studentas>();
-
+        
 
         public static void GenerateRandomStudentList()
         {
@@ -132,6 +132,50 @@ namespace lbd3
             else { Console.WriteLine("Failai jau sukurti."); }
 
         }
+
+
+
+
+
+
+        static public List<Studentas> IsFailo(List<Studentas> studentaiF)
+        {
+
+
+            Console.WriteLine("Iveskite failo vieta (path):");
+            var path = Console.ReadLine();
+            if (File.Exists(path))
+
+            {
+                try
+                {
+                    var tekstas = File.ReadAllLines(path);
+                    var title = tekstas[0].Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    int n = 1;
+                    while (n < tekstas.Length)
+                    {
+                        var eilute = tekstas[n].Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        studentaiF.Add(new Studentas(eilute[0], eilute[1]));
+                        for (int i = 2; i < title.Length - 1; i++)
+                        {
+                            studentaiF.Last().ivestiNamuDarboBala(int.Parse(eilute[i]));
+                        }
+                        studentaiF.Last().ivestiEgzaminoBala(int.Parse(eilute[title.Length - 1]));
+                        n++;
+                    }
+                }
+                catch (Exception e) { Console.WriteLine("Klaida: " + e); }
+                }
+            else
+            {
+                Console.WriteLine("Tokio failo nera.");
+            }
+
+            return studentaiF;
+        }
+
+
+
 
 
     }

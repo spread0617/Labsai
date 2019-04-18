@@ -43,7 +43,7 @@ namespace lbd3
                             switch (choice2)
                             {
                                 case 1:
-                                    IsFailo();
+                                    studentai = failai.IsFailo(studentai);
                                 
                                 break;
                                 case 2:
@@ -54,13 +54,6 @@ namespace lbd3
                             break;
                         case 2:
                             vidurkioSk();
-                        foreach (var std in studentai) {
-                            Console.WriteLine(std.vardas);
-                            for (int i = 0; i < std._pazymiai.Count(); i++) {
-                                Console.WriteLine(std._pazymiai[i]);
-                            }
-
-                        }
                             break;
                         case 3:
                             medianosSkaiciavimas();
@@ -91,53 +84,8 @@ namespace lbd3
 
 
         }
+        
 
-        static public void IsFailo()
-        {
-
-            //System.IO.StreamReader file = new System.IO.StreamReader(@"C:\Users\domI\Desktop\Git\Labs\kursiokai.txt");
-            //string[] words = file.ReadToEnd().Split(' ');
-            try
-            {
-                using (var mappedFile1 = MemoryMappedFile.CreateFromFile(@"C:\Users\domI\Desktop\Git\Labs\kursiokai.txt"))
-                {
-                    using (Stream mmStream = mappedFile1.CreateViewStream())
-                    {
-                        using (StreamReader sr = new StreamReader(mmStream, Encoding.ASCII))
-                        {
-                            pazymiai.Clear();
-                            string headerLine = sr.ReadLine();
-                            while (!sr.EndOfStream)
-                            {
-                                var line = sr.ReadLine();
-                                var lineWords = line.Split(' ');
-                                vardas = lineWords[0];
-                                pavarde = lineWords[1];// out of bounds!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                                for (int i = 2; i < 6; i++)
-                                {
-
-                                    int pazymysRead = int.Parse(lineWords[i]);
-                                    pazymiai.Add(pazymysRead);
-                                    nd_total = nd_total + pazymysRead;
-                                    /* double pazymysRead1 = double.Parse(lineWords[2]);
-                                     double pazymysRead2 = double.Parse(lineWords[3]);
-                                     double pazymysRead3 = double.Parse(lineWords[4]);
-                                     double pazymysRead4 = double.Parse(lineWords[5]);
-                                     double pazymysRead5 = double.Parse(lineWords[6]);
-                                     pazymiai.Add(pazymysRead1, pazymysRead2, pazymysRead3, pazymysRead4, pazymysRead5);*/
-                                }
-                                egz_ivert = double.Parse(lineWords[7]);
-                                studentai.Add(new Studentas(vardas, pavarde, egz_ivert, pazymiai, nd_total, 5));
-                                
-                                nd_total = 0;
-                                
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception e) { Console.WriteLine("Klaida: " + e); }
-        }
         static public void medianosSkaiciavimas()
         {
             
