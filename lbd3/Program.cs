@@ -138,45 +138,46 @@ namespace lbd3
         }
         static public void medianosSkaiciavimas()
         {
-            Console.WriteLine("{0,-5 } {1,5 } {2,10 }", "Vardas", "Pavarde", "galutinis (Med.)");
-            Console.WriteLine("----------------------------------");
+            
+                Console.WriteLine("{0,-5 } {1,5 } {2,10 }", "Vardas", "Pavarde", "galutinis (Med.)");
+                Console.WriteLine("----------------------------------");
 
-            //int cnt = pazymiai.Count;
+                //int cnt = pazymiai.Count;
 
-            // try
-            //{
-            foreach (var stud in studentai)
-            {
-                stud._pazymiai.Sort();
-                if (stud.kiekis % 2 == 0)
+                try
                 {
-                    double middleElement1 = stud._pazymiai[(stud.kiekis / 2) - 1]; //out of bounds!!!!!!!!!!!!!!!!!!!!!!!!
-                    double middleElement2 = stud._pazymiai[(stud.kiekis / 2)];
-                    mediana = (middleElement1 + middleElement2) / 2;
+                foreach (var stud in studentai)
+                {
+                    stud._pazymiai.Sort();
+                    if (stud.kiekis % 2 == 0)
+                    {
+                        double middleElement1 = stud._pazymiai[(stud.kiekis / 2) - 1]; //out of bounds!!!!!!!!!!!!!!!!!!!!!!!!
+                        double middleElement2 = stud._pazymiai[(stud.kiekis / 2)];
+                        mediana = (middleElement1 + middleElement2) / 2;
+
+                    }
+                    else
+                    {
+                        mediana = stud._pazymiai[(stud.kiekis / 2)]; //out ofasd bounds!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    }
+
+                    galutinis = (0.3 * mediana) + (0.7 * egz_ivert);
+
+                    Console.WriteLine("{0,-5}{1,5}{2,10}", stud.vardas, stud.pavarde, galutinis);
 
                 }
-                else
-                {
-                    mediana = stud._pazymiai[(stud.kiekis / 2)]; //out ofasd bounds!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 }
-
-                galutinis = (0.3 * mediana) + (0.7 * egz_ivert);
-
-                Console.WriteLine("{0,-5}{1,5}{2,10}", stud.vardas, stud.pavarde, galutinis);
-
+                catch (Exception e) {
+                  Console.WriteLine("Klaida: " + e);
+                }
             }
-            //}
-            // catch (Exception e) {
-            //  Console.WriteLine("Klaida: " + e);
-        //}
-        }
 
 
 
 
         static public void vidurkioSk()
         {
-
+            
             //studentai = studentai.OrderBy(q => q).ToList();
             List<Studentas> SortedList = studentai.OrderBy(o => o.vardas).ToList();
             //studentai.Sort(new Comparison<Studentas>((x, y) => vardas.Compare(x.vardas, y.vardas)));
