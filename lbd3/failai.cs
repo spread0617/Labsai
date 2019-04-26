@@ -123,7 +123,7 @@ namespace lbd3
                 }
 
                 watch.Stop();
-                Console.WriteLine("It took {0} miliseconds to complete this task.", watch.ElapsedMilliseconds);
+                Console.WriteLine("uztruko {0} ", watch.ElapsedMilliseconds);
                 File.AppendAllLines(path10, allLines10);
                 File.AppendAllLines(path100, allLines100);
                 File.AppendAllLines(path1000, allLines1000);
@@ -143,7 +143,7 @@ namespace lbd3
 
 
             Console.WriteLine("Iveskite failo vieta (path):");
-            var path = Console.ReadLine();
+            var path = Console.ReadLine();            
             if (File.Exists(path))
 
             {
@@ -152,15 +152,29 @@ namespace lbd3
                     var tekstas = File.ReadAllLines(path);
                     var title = tekstas[0].Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                     int n = 1;
+                    var pazymys = 0;
+                    var egzam = 0;
+                    var _pazymiaiTotal = 0;
+                    var skaitiklis = 0;
+                    List<int> _pazymiaiF = new List<int>();
                     while (n < tekstas.Length)
                     {
                         var eilute = tekstas[n].Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        studentaiF.Add(new Studentas(eilute[0], eilute[1]));
+                        //studentaiF.Add(new Studentas(eilute[0], eilute[1]));
+                        
                         for (int i = 2; i < title.Length - 1; i++)
                         {
-                            studentaiF.Last().ivestiNamuDarboBala(int.Parse(eilute[i]));
+
+                            pazymys = int.Parse(eilute[i]);
+                            _pazymiaiTotal += pazymys;
+                            _pazymiaiF.Add(pazymys);
+                            skaitiklis++;
                         }
-                        studentaiF.Last().ivestiEgzaminoBala(int.Parse(eilute[title.Length - 1]));
+                        egzam = int.Parse(eilute[title.Length - 1]);
+                        studentaiF.Add(new Studentas(eilute[0], eilute[1],egzam,_pazymiaiF,_pazymiaiTotal,skaitiklis));
+                        _pazymiaiF.Clear();
+                        skaitiklis = 0;
+                        _pazymiaiTotal = 0;
                         n++;
                     }
                 }

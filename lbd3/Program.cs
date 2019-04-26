@@ -108,7 +108,7 @@ namespace lbd3
                     }
                     else
                     {
-                        mediana = stud._pazymiai[(stud.kiekis / 2)]; //out ofasd bounds!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        mediana = stud._pazymiai[(stud.kiekis / 2)]; 
                     }
 
                     galutinis = (0.3 * mediana) + (0.7 * egz_ivert);
