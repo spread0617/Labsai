@@ -30,7 +30,7 @@ namespace lbd3
 
 
             bool testi = true;
-            //try {
+             try {
                 while (testi)
                 {
                     Console.WriteLine("1) Ivesti nauja studenta\n2) Galutiniam balui pagal vidurki\n3) Galutiniam balui pagal mediana\n4) Suskirstyti studentus i 'nuskriaustukus' ir galvocius + issaugoti srasus faile.\n5) Baigti darba\n99) Sugeneruoti random studentu failus.");
@@ -80,7 +80,7 @@ namespace lbd3
 
                     Console.ReadLine();
                 }
-            //}catch(Exception e) { Console.WriteLine("Klaida: " + e); }
+            }catch(Exception e) { Console.WriteLine("Klaida: " + e); }
 
 
         }
