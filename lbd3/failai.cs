@@ -168,7 +168,7 @@ namespace lbd3
                             pazymys = int.Parse(eilute[i]);
                             _pazymiaiTotal += pazymys;
                             _pazymiaiF.Add(pazymys);
-                            skaitiklis++;
+                            skaitiklis++;//s
                         }
                         egzam = int.Parse(eilute[title.Length - 1]);
                         studentaiF.Add(new Studentas(eilute[0], eilute[1],egzam,_pazymiaiF,_pazymiaiTotal,skaitiklis));
