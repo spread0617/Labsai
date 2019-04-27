@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace lbd3
 {
     class failai
@@ -149,8 +151,8 @@ namespace lbd3
             {
                 try
                 {
-                    var tekstas = File.ReadAllLines(path);
-                    var title = tekstas[0].Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    string[] tekstas = File.ReadAllLines(path);
+                    tekstas = tekstas.Where(x => !string.IsNullOrEmpty(x)).ToArray();
                     int n = 1;
                     var pazymys = 0;
                     var egzam = 0;
@@ -159,10 +161,9 @@ namespace lbd3
                     List<int> _pazymiaiF = new List<int>();
                     while (n < tekstas.Length)
                     {
-                        var eilute = tekstas[n].Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        //studentaiF.Add(new Studentas(eilute[0], eilute[1]));
-                        
-                        for (int i = 2; i < title.Length - 1; i++)
+                        _pazymiaiF.Clear();
+                        string[] eilute = tekstas[n].Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        for (int i = 2; i < eilute.Length - 1; i++)
                         {
 
                             pazymys = int.Parse(eilute[i]);
@@ -170,9 +171,10 @@ namespace lbd3
                             _pazymiaiF.Add(pazymys);
                             skaitiklis++;//s
                         }
-                        egzam = int.Parse(eilute[title.Length - 1]);
+                        
+                        egzam = int.Parse(eilute[eilute.Length - 1]);
                         studentaiF.Add(new Studentas(eilute[0], eilute[1],egzam,_pazymiaiF,_pazymiaiTotal,skaitiklis));
-                        _pazymiaiF.Clear();
+                        
                         skaitiklis = 0;
                         _pazymiaiTotal = 0;
                         n++;
